@@ -1,4 +1,4 @@
-<div class="topbar">
+<nav class="topbar">
 	<div class="w3-left topbarLeft">
 		<div class="w3-right btnJar"></div>
 	</div>
@@ -17,4 +17,4 @@
 		</div>
 		<div class="w3-left btn btnErrReport"></div>
 	</div>
-</div>
+</nav>

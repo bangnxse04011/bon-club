@@ -1,7 +1,9 @@
 $(function() {
 	var $main = $(".main"),
 		slideArr,
-		gamelistArr;
+		gamelistArr,
+		gamelistIndex = 0,
+		footerArr;
 
 	$(window)
 		.on("resize", event => {
@@ -34,9 +36,9 @@ $(function() {
 		let slideIndex = 0;
 
 		for (let i = 0; i < slideArr.length; i++) {
-			let $bannerItem;
+			let $bannerItem, $bannerDot;
 
-			$bannerItem = $("<div class='bannerItem'></div>");
+			$bannerItem = $('<div class="bannerItem"></div>');
 
 			$bannerItem
 				.css({
@@ -47,6 +49,10 @@ $(function() {
 				});
 
 			$(".bannerSlide").append($bannerItem);
+
+			$bannerDot = $('<div class="bannerDot"></div>');
+
+			$(".bannerDots").append($bannerDot);
 		}
 
 		nextSlide();
@@ -59,7 +65,12 @@ $(function() {
 				slideIndex = 0;
 			}
 
-			$('.bannerSlide').css("marginLeft", -slideIndex * $('.bannerCtn').width());
+			$(".bannerSlide").css("transform", `translateX(${-slideIndex * $(".bannerCtn").width()}px)`);
+
+			$(".bannerDot")
+				.removeClass("act")
+				.eq(slideIndex)
+				.addClass("act");
 
 			setTimeout(nextSlide, 2000);
 		}
@@ -67,56 +78,60 @@ $(function() {
 
 	gamelistArr = [
 		{
-			img: "taiXiu",
+			imgName: "taiXiu",
 			clickFn: taiXiuFn,
 			isEnabled: true
 		}, {
-			img: "chemHoaQua",
+			imgName: "chemHoaQua",
 			clickFn: chemHoaQuaFn,
 			isEnabled: true
 		}, {
-			img: "miniPoker",
+			imgName: "miniPoker",
 			clickFn: miniPokerFn,
 			isEnabled: true
 		}, {
-			img: "tienLen",
-			clickFn: tienLenFn,
+			imgName: "xocDia",
+			clickFn: xocDiaFn,
+			isEnabled: true
 		}, {
-			img: "xocDia",
-			clickFn: xocDiaFn
+			imgName: "mauBinh",
+			clickFn: mauBinhFn
 		}, {
-			img: "mauBinh",
-			clickFn: mauBinh
+			imgName: "tienLenMienNam",
+			clickFn: tienLenMienNamFn
 		}, {
-			img: "chimDien",
+			imgName: "chimDien",
 			clickFn: chimDienFn,
 			isEnabled: true
 		}, {
-			img: "pokemon",
+			imgName: "pokemon",
 			clickFn: pokemonFn,
 			isEnabled: true
 		}, {
-			img: "caoThap",
+			imgName: "caoThap",
 			clickFn: caoThapFn,
 			isEnabled: true
 		}, {
-			img: "baCay",
+			imgName: "baCay",
 			clickFn: baCayFn
 		}, {
-			img: "poker",
+			imgName: "poker",
 			clickFn: pokerFn
+		}, {
+			imgName: "sam",
+			clickFn: samFn
 		}
 	];
 
-	$(".gamelistSlide").css("width", Math.ceil(gamelistArr.length / 2) * 160);
+	$(".gamelistSlide").css("width", Math.ceil(gamelistArr.length / 2) * 152);
 
 	for (let gamelistObj of gamelistArr) {
 		let $gamelistItem;
 
-		$gamelistItem = $("<div class='gamelistItem'></div>");
+		$gamelistItem = $('<div class="gamelistItem"></div>');
 
 		$gamelistItem
-			.css("backgroundImage", `url(/imgs/gamelist/${gamelistObj.img + (gamelistObj.isEnabled ? "" : "-comingSoon")}.png)`)
+			.css("backgroundImage", `url(/imgs/gamelist/${gamelistObj.imgName + (gamelistObj.isEnabled ? "" : "-comingSoon")}-min.png)`)
 			.click(() => {
 				if (gamelistObj.isEnabled) {
 					gamelistObj.clickFn();
@@ -127,17 +142,83 @@ $(function() {
 		$(".gamelistSlide").append($gamelistItem);
 	}
 
+	$(".gamelistPrev").click(event => {
+		let transX,
+			wView = $(".gamelistView").width();
+
+		if (gamelistIndex > 0) {
+			gamelistIndex--;
+		}
+
+		transX = -gamelistIndex * wView;
+
+		if (transX > 0) {
+			transX = 0;
+		}
+
+		$(".gamelistSlide").css("transform", `translateX(${transX}px)`);
+	});
+
+	$(".gamelistNext").click(event => {
+		let transX,
+			wView = $(".gamelistView").width(),
+			wSlide = $(".gamelistSlide").width();
+
+		if (gamelistIndex < Math.ceil(gamelistArr.length / 10) - 1) {
+			gamelistIndex++;
+		}
+
+		transX = -gamelistIndex * wView;
+
+		if (transX < -wSlide + wView) {
+			transX = -wSlide + wView;
+		}
+
+		$(".gamelistSlide").css("transform", `translateX(${transX}px)`);
+	});
+
+	footerArr = [
+		{
+			imgName: "newsIcon",
+			clickFn: footerNewsFn
+		}, {
+			imgName: "fanpageIcon",
+			clickFn: footerFanpageFn
+		}, {
+			imgName: "guideIcon",
+			clickFn: footerGuideFn
+		}, {
+			imgName: "callIcon",
+			clickFn: footerCallFn
+		}, {
+			imgName: "groupIcon",
+			clickFn: footerGroupFn
+		}
+	];
+
+	for (let footerObj of footerArr) {
+		let $footerItem;
+
+		$footerItem = $('<div class="footerItem"></div>');
+
+		$footerItem
+			.css("backgroundImage", `url(/imgs/footer/${footerObj.imgName}.png)`)
+			.click(footerObj.clickFn);
+
+		$(".footer").append($footerItem);
+	}
+
 	function taiXiuFn() {}
 
 	function chemHoaQuaFn() {}
 
 	function miniPokerFn() {}
 
-	function tienLenFn() {}
-
 	function xocDiaFn() {}
 
 	function mauBinhFn() {}
+
+	function tienLenMienNamFn() {}
 
 	function chimDienFn() {}
 
@@ -148,4 +229,16 @@ $(function() {
 	function baCayFn() {}
 
 	function pokerFn() {}
+
+	function samFn() {}
+
+	function footerNewsFn() {}
+
+	function footerFanpageFn() {}
+
+	function footerGuideFn() {}
+
+	function footerCallFn() {}
+
+	function footerGroupFn() {}
 });
