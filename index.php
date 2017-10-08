@@ -15,12 +15,12 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:400,700&amp;subset=latin-ext,vietnamese">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton">
 	<link rel="stylesheet" href="/libs/w3.css">
-	<link rel="stylesheet" href="/styles/index.css">
+	<link rel="stylesheet" href="/styles/index.min.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.0/velocity.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.0/velocity.ui.min.js"></script>
-	<script src="/scripts/index.js"></script>
+	<script src="/scripts/index.min.js"></script>
 </head>
 <body>
 	<div class="main">
