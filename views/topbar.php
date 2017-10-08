@@ -15,6 +15,6 @@
 				<img class="btnMinigame3" src="/imgs/minigameLightIcon.png">
 			</div>
 		</div>
-		<div class="w3-left btn btnErrReport"></div>
+		<a href="https://docs.google.com/forms/d/e/1FAIpQLSeqPDPWP9WKooakwg_44TE5a28XhjpV-e8NbTHL6E8U9oqX9Q/viewform" class="w3-left btn btnErrReport" target="blank"></a>
 	</div>
 </nav>

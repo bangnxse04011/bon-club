@@ -9,7 +9,26 @@ $(function() {
 		.on("resize", event => {
 			$main.css("zoom", window.innerWidth / 1366);
 		})
-		.trigger("resize");
+		.trigger("resize")
+		.click(event => {
+			if (event.target.classList.contains("close")) {
+				$(event.target).closest(".w3-modal").hide();
+			}
+		});
+
+	$("#btnLogin").click(function(event) {
+		let frmLogin = document.querySelector("#frmLogin");
+
+		if (frmLogin.checkValidity()) {
+			$.post("/controllers/login.php", $(frmLogin).serialize(), data => {
+				$(".headerHome").hide();
+				$(".headerLogged").show();
+			});
+		}
+		else {
+			frmLogin.reportValidity();
+		}
+	});
 
 	slideArr = [
 		{
@@ -126,12 +145,17 @@ $(function() {
 	$(".gamelistSlide").css("width", Math.ceil(gamelistArr.length / 2) * 152);
 
 	for (let gamelistObj of gamelistArr) {
-		let $gamelistItem;
+		let $gamelistItem, bgIcon, bgComingSoon = "";
 
 		$gamelistItem = $('<div class="gamelistItem"></div>');
 
+		if (!gamelistObj.isEnabled) {
+			bgComingSoon = `url(/imgs/comingSoon.png) 46px 2px/100px no-repeat,`;
+		}
+		bgIcon = `url(/imgs/gamelist/${gamelistObj.imgName + (gamelistObj.isEnabled ? "" : "-comingSoon")}-min.png) center/86% no-repeat`;
+
 		$gamelistItem
-			.css("backgroundImage", `url(/imgs/gamelist/${gamelistObj.imgName + (gamelistObj.isEnabled ? "" : "-comingSoon")}-min.png)`)
+			.css("background", bgComingSoon + bgIcon)
 			.click(() => {
 				if (gamelistObj.isEnabled) {
 					gamelistObj.clickFn();
@@ -207,6 +231,10 @@ $(function() {
 
 		$(".footer").append($footerItem);
 	}
+
+	$(".gamelistItem").click(event => {
+		$("#modalLoginRequire").show();
+	});
 
 	function taiXiuFn() {}
 
